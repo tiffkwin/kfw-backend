@@ -21,3 +21,9 @@ def saveFile(file):
         print(e)
         return False
     return True
+
+# def retrieveFile(uid):
+#     try:
+#         file = Textfile.query.filter_by(user_id=uid).first()
+#         f = open(file.file_path, "r")
+#         return f

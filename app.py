@@ -2,6 +2,7 @@ import os
 from flask import Flask, flash, request, redirect, url_for, send_from_directory, Response
 from project.services.FileService import *
 from project import app
+from project.services.MPService import *
 
 UPLOAD_FOLDER = './project/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -30,6 +31,15 @@ def upload_file():
 def uploaded_file():
     filename = request.args.get('filename')
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+@app.route('/analyzeMP')
+def analyze_mp():
+    res = analyzeMP()
+
+    if res == True:
+        return Response('success', status=200)
+    else:
+        return Response('error', status=500)
 
 if __name__ == "__main__":
     app.run()

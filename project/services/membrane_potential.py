@@ -28,22 +28,39 @@ NUM_PERIODS = 8 # number of additions in one trial
 sub_list = ['Pyr/M','G/M','Pc/M','S/R','AKG','P/G/M/S/O','Oct/M','Ac/M','KIC/M','KIC', 'KIV', 'KMV','KIV/M','KIV/Oct','KMV/M','KMV/Oct','Pyr/C','Oct/C','Pc/C','Ac/C','Glut', 'None'] # list of available substrates
 add_list = ['Buffer', 'Mito', 'Substrate', 'PCR', 'Drug', 'Vehicle', 'FCCP', 'Oligo', 'Rot', 'Ant A', 'AF', 'BCNU', 'CN', 'Ala', 'Other'] # list of available additions
 
-# # Global variables (DO NOT CHANGE)
-# SLOPE = 0.0
-# Y_INT = 0.0
-# substrates = [] # list that contains the substrates used in experiment
-# ID = '' # the experiment id
-# s_num = [] # list that keeps track of substrate repetitions
-# additions = [] # list that contains the additions used in experiment
-# groups = [] # list containing group descriptions
-
-SLOPE = 1.0
+# Global variables (DO NOT CHANGE)
+SLOPE = 0.0
 Y_INT = 0.0
-substrates = ['Pyr/M_G1','G/M_G1','Pc/M_G1','S/R_G1','AKG_G1','P/G/M/S/O_G1', 'Oct/M','Ac/M'] # list that contains the substrates used in experiment
-ID = 'sdfdfg' # the experiment id
+substrates = [] # list that contains the substrates used in experiment
+ID = '' # the experiment id
 s_num = [] # list that keeps track of substrate repetitions
-additions = ['Buffer', 'Mito', 'Substrate', 'PCR', 'Drug', 'Vehicle', 'FCCP', 'Oligo'] # list that contains the additions used in experiment
-groups = ['group 1'] # list containing group descriptions
+additions = [] # list that contains the additions used in experiment
+groups = [] # list containing group descriptions
+
+# SLOPE = 1.0
+# Y_INT = 0.0
+# substrates = ['Pyr/M_G1','G/M_G1','Pc/M_G1','S/R_G1','AKG_G1','P/G/M/S/O_G1', 'Oct/M','Ac/M'] # list that contains the substrates used in experiment
+# ID = 'sdfdfg' # the experiment id
+# s_num = [] # list that keeps track of substrate repetitions
+# additions = ['Buffer', 'Mito', 'Substrate', 'PCR', 'Drug', 'Vehicle', 'FCCP', 'Oligo'] # list that contains the additions used in experiment
+# groups = ['group 1'] # list containing group descriptions
+
+def setVariables(slope, y_int, substrates_list, experiment_id, sub_repetitions, additions_list, group_descriptions):
+	global SLOPE
+	global Y_INT
+	global substrates
+	global ID
+	global s_num
+	global additions
+	global groups
+
+	SLOPE = slope
+	Y_INT = y_int
+	substrates = substrates_list
+	ID = experiment_id
+	s_num = sub_repetitions
+	additions = additions_list
+	groups = group_descriptions
 
 # FUNCTION: Retrieves input from the user
 # RETURNS: A boolean where True indicates use of the standard curve

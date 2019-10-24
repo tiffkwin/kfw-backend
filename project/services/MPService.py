@@ -8,7 +8,9 @@ from .membrane_potential import *
 # UPLOAD_FOLDER = './project/uploads'
 # app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-def analyzeMP():
+def analyzeMP(slope, y_int, substrates_list, experiment_id, sub_repetitions, additions_list, group_descriptions):
+
+    setVariables(slope, y_int, substrates_list, experiment_id, sub_repetitions, additions_list, group_descriptions)
 
     bool_stdcurve = True # only for testing
 

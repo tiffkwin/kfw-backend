@@ -32,9 +32,19 @@ def uploaded_file():
     filename = request.args.get('filename')
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
-@app.route('/analyzeMP')
+@app.route('/analyzeMP', methods=['POST'])
 def analyze_mp():
-    res = analyzeMP()
+    data = request.get_json()
+
+    slope = data['slope']
+    y_int = data['y_int']
+    substrates_list = data['substrates_list']
+    experiment_id = data['experiment_id']
+    sub_repetitions = data['sub_repetitions']
+    additions_list = data['additions_list']
+    group_descriptions = data['group_descriptions']
+
+    res = analyzeMP(slope, y_int, substrates_list, experiment_id, sub_repetitions, additions_list, group_descriptions)
 
     if res == True:
         return Response('success', status=200)

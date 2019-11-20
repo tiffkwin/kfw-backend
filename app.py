@@ -3,6 +3,7 @@ from flask import Flask, flash, request, redirect, url_for, send_from_directory,
 from project.services.FileService import *
 from project import app
 from project.services.MPService import *
+import json
 
 UPLOAD_FOLDER = './project/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -15,7 +16,7 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 @app.route('/')
 def hello_world():
     return 'Hello, World!'
-
+    
 @app.route('/upload', methods=['POST'])
 def upload_file():
     file = request.files['file']
@@ -34,7 +35,7 @@ def uploaded_file():
 
 @app.route('/analyzeMP', methods=['POST'])
 def analyze_mp():
-    data = request.get_json()
+    data = json.loads(request.data)
 
     slope = data['slope']
     y_int = data['y_int']

@@ -11,7 +11,7 @@ from flask_sqlalchemy import SQLAlchemy
 ################
  
 app = Flask(__name__)
-cors = CORS(app)
+CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///Users/tiff/GitHub/kfw-backend/test.db'
 db = SQLAlchemy(app)
 

@@ -4,6 +4,8 @@ from .. import app
 from .FileService import * 
 from .. import db
 from .membrane_potential import *
+import numpy as np
+import pandas as pd
 
 # UPLOAD_FOLDER = './project/uploads'
 # app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -31,7 +33,7 @@ def analyzeMP(slope, y_int, substrates_list, experiment_id, sub_repetitions, add
         if mac:
             path = root + '/project/uploads/*.txt'
         else:
-            path = root + '\project\uploads\*.txt'
+            path = root + '\project\\uploads\\*.txt'
     
         print(path)
 
@@ -74,7 +76,7 @@ def analyzeMP(slope, y_int, substrates_list, experiment_id, sub_repetitions, add
             if mac:
                 os.chdir(root + '/project/uploads')
             else:
-                os.chdir(root + '\project\uploads')
+                os.chdir(root + '\project\\uploads')
 
             # Creates .xlsx file to output analyzed data to
             writer = pd.ExcelWriter(shortened_filename + '.xlsx')

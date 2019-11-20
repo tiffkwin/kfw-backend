@@ -10,17 +10,19 @@
 #	  e.g. if folder path is users/data_analysis, then type the command "cd users/data_analysis" without quotations
 # 4) Type command "python membrane_potential.py" without quotations to run
 
-import matplotlib
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-plt.style.use('seaborn-darkgrid')
-import seaborn as sns
-import scipy.stats as stats
+import datetime
 import glob
 import os
-import datetime
 from sys import platform
+
+import matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import scipy.stats as stats
+import seaborn as sns
+
+plt.style.use('seaborn-darkgrid')
 
 # Global constants (CHANGE IF NEEDED)
 TIME_PERIOD = 180 # length of trial in seconds
@@ -36,14 +38,6 @@ ID = '' # the experiment id
 s_num = [] # list that keeps track of substrate repetitions
 additions = [] # list that contains the additions used in experiment
 groups = [] # list containing group descriptions
-
-# SLOPE = 1.0
-# Y_INT = 0.0
-# substrates = ['Pyr/M_G1','G/M_G1','Pc/M_G1','S/R_G1','AKG_G1','P/G/M/S/O_G1', 'Oct/M','Ac/M'] # list that contains the substrates used in experiment
-# ID = 'sdfdfg' # the experiment id
-# s_num = [] # list that keeps track of substrate repetitions
-# additions = ['Buffer', 'Mito', 'Substrate', 'PCR', 'Drug', 'Vehicle', 'FCCP', 'Oligo'] # list that contains the additions used in experiment
-# groups = ['group 1'] # list containing group descriptions
 
 def setVariables(slope, y_int, substrates_list, experiment_id, sub_repetitions, additions_list, group_descriptions):
 	global SLOPE

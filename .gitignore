@@ -127,6 +127,6 @@ dmypy.json
 .vscode
 uploads/
 
-output/
+.output/
 
 *.xlsx

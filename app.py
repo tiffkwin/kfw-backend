@@ -5,8 +5,8 @@ from project import app
 from project.services.MPService import *
 import json
 
-UPLOAD_FOLDER = './project/uploads'
-OUTPUT_FOLDER = './output/TMRM_Redox_Cells_2018-12-13_10_57_19_Derived_MultiDye'
+UPLOAD_FOLDER = os.getcwd() + '/project/uploads'
+OUTPUT_FOLDER = os.getcwd() + '/output/TMRM_Redox_Cells_2018-12-13_10_57_19_Derived_MultiDye'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['OUTPUT_FOLDER'] = OUTPUT_FOLDER
 
@@ -30,10 +30,9 @@ def upload_file():
         return Response('error', status=500)
     # return redirect(url_for('uploaded_file',filename=filename))
 
-@app.route('/uploads', methods=['GET'])
+@app.route('/output', methods=['GET'])
 def uploaded_file():
     # filename = request.args.get('filename')
-    print(app.config['OUTPUT_FOLDER'])
     return send_from_directory(app.config['OUTPUT_FOLDER'], 'TMRM_Redox_Cells_2018-12-13_10_57_19_Derived_MultiDye.xlsx')
 
 @app.route('/analyzeMP', methods=['POST'])

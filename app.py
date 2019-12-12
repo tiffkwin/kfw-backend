@@ -5,7 +5,7 @@ from project import app
 from project.services.MPService import *
 import json
 
-UPLOAD_FOLDER = os.getcwd() + '/project/uploads'
+UPLOAD_FOLDER = './project/uploads'
 OUTPUT_FOLDER = os.getcwd() + '/output/TMRM_Redox_Cells_2018-12-13_10_57_19_Derived_MultiDye'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['OUTPUT_FOLDER'] = OUTPUT_FOLDER

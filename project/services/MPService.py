@@ -10,9 +10,9 @@ import pandas as pd
 # UPLOAD_FOLDER = './project/uploads'
 # app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-def analyzeMP(slope, y_int, substrates_list, experiment_id, sub_repetitions, additions_list, group_descriptions):
+def analyzeMP(slope, y_int, substrates_list, experiment_id, sub_repetitions, additions_list, group_descriptions, times):
 
-    setVariables(slope, y_int, substrates_list, experiment_id, sub_repetitions, additions_list, group_descriptions)
+    setVariables(slope, y_int, substrates_list, experiment_id, sub_repetitions, additions_list, group_descriptions, times)
 
     bool_stdcurve = True # only for testing
 

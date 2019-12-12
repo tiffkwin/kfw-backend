@@ -6,7 +6,9 @@ from project.services.MPService import *
 import json
 
 UPLOAD_FOLDER = './project/uploads'
+OUTPUT_FOLDER = './output/TMRM_Redox_Cells_2018-12-13_10_57_19_Derived_MultiDye'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['OUTPUT_FOLDER'] = OUTPUT_FOLDER
 
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
@@ -28,10 +30,11 @@ def upload_file():
         return Response('error', status=500)
     # return redirect(url_for('uploaded_file',filename=filename))
 
-@app.route('/uploads')
+@app.route('/uploads', methods=['GET'])
 def uploaded_file():
-    filename = request.args.get('filename')
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    # filename = request.args.get('filename')
+    print(app.config['OUTPUT_FOLDER'])
+    return send_from_directory(app.config['OUTPUT_FOLDER'], 'TMRM_Redox_Cells_2018-12-13_10_57_19_Derived_MultiDye.xlsx')
 
 @app.route('/analyzeMP', methods=['POST'])
 def analyze_mp():
@@ -44,8 +47,9 @@ def analyze_mp():
     sub_repetitions = data['sub_repetitions']
     additions_list = data['additions_list']
     group_descriptions = data['group_descriptions']
+    times = data['times']
 
-    res = analyzeMP(slope, y_int, substrates_list, experiment_id, sub_repetitions, additions_list, group_descriptions)
+    res = analyzeMP(slope, y_int, substrates_list, experiment_id, sub_repetitions, additions_list, group_descriptions, times)
 
     if res == True:
         return Response('success', status=200)

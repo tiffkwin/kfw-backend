@@ -38,8 +38,9 @@ ID = '' # the experiment id
 s_num = [] # list that keeps track of substrate repetitions
 additions = [] # list that contains the additions used in experiment
 groups = [] # list containing group descriptions
+time_segments = [] # list containing time segments for each run
 
-def setVariables(slope, y_int, substrates_list, experiment_id, sub_repetitions, additions_list, group_descriptions):
+def setVariables(slope, y_int, substrates_list, experiment_id, sub_repetitions, additions_list, group_descriptions, times):
 	global SLOPE
 	global Y_INT
 	global substrates
@@ -47,6 +48,7 @@ def setVariables(slope, y_int, substrates_list, experiment_id, sub_repetitions, 
 	global s_num
 	global additions
 	global groups
+	global time_segments
 
 	SLOPE = slope
 	Y_INT = y_int
@@ -55,6 +57,7 @@ def setVariables(slope, y_int, substrates_list, experiment_id, sub_repetitions, 
 	s_num = sub_repetitions
 	additions = additions_list
 	groups = group_descriptions
+	time_segments = times
 
 # FUNCTION: Retrieves input from the user
 # RETURNS: A boolean where True indicates use of the standard curve

@@ -3,6 +3,7 @@ from flask import Flask, flash, request, redirect, url_for, send_from_directory,
 from project.services.FileService import *
 from project import app
 from project.services.MPService import *
+from project.services.NADHService import *
 import json
 
 UPLOAD_FOLDER = './project/uploads'
@@ -37,6 +38,44 @@ def uploaded_file():
 
 @app.route('/analyzeMP', methods=['POST'])
 def analyze_mp():
+    data = json.loads(request.data)
+
+    slope = data['slope']
+    y_int = data['y_int']
+    substrates_list = data['substrates_list']
+    experiment_id = data['experiment_id']
+    sub_repetitions = data['sub_repetitions']
+    additions_list = data['additions_list']
+    group_descriptions = data['group_descriptions']
+    times = data['times']
+
+    res = analyzeMP(slope, y_int, substrates_list, experiment_id, sub_repetitions, additions_list, group_descriptions, times)
+
+    if res == True:
+        return Response('success', status=200)
+    else:
+        return Response('error', status=500)
+
+@app.route('/analyzeNADH', methods=['POST'])
+def analyze_nadh_redox():
+    data = json.loads(request.data)
+
+    substrates_list = data['substrates_list']
+    experiment_id = data['experiment_id']
+    sub_repetitions = data['sub_repetitions']
+    additions_list = data['additions_list']
+    group_descriptions = data['group_descriptions']
+    times = data['times']
+
+    res = analyzeNADHRedox(substrates_list, experiment_id, sub_repetitions, additions_list, group_descriptions, times)
+
+    if res == True:
+        return Response('success', status=200)
+    else:
+        return Response('error', status=500)
+
+@app.route('/analyze-H2O2', methods=['POST'])
+def analyze_h2o2():
     data = json.loads(request.data)
 
     slope = data['slope']

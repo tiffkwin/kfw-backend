@@ -9,8 +9,8 @@
 # 3) Navigate to the folder 
 #	  e.g. if folder path is users/data_analysis, then type the command "cd users/data_analysis" without quotations
 # 4) Type command "python H202.py" without quotations to run
-
-import matplotlib
+ 
+# import matplotlib
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -40,6 +40,34 @@ MITOCHONDRIA_ATP = 0.0 # mg of mitochondria used in experiment (ATP)
 MITOCHONDRIA_H2O2 = 0.0 # mg of mitochondria used in experiment (H2O2)
 additions = [] # list that contains the additions used in experiment
 groups = [] # list of group descriptions
+time_segments = [] # list containing time segments for each run
+
+def setVariables(slope_atp, y_int_atp, slope_h2o2, y_int_h2o2, substrates_list, mito_atp, mito_h2o2, experiment_id, sub_repetitions, additions_list, group_descriptions, times):
+	global ID
+	global SLOPE_H2O2
+	global Y_INT_H2O2
+	global SLOPE_ATP
+	global Y_INT_ATP
+	global substrates
+	global MITOCHONDRIA_ATP
+	global MITOCHONDRIA_H2O2
+	global additions
+	global NUM_PERIODS
+	global groups
+	global time_segments
+
+	ID = experiment_id
+	SLOPE_H2O2 = slope_h2o2
+	Y_INT_H2O2 = y_int_h2o2
+	SLOPE_ATP = slope_atp
+	Y_INT_ATP = y_int_atp
+	substrates = substrates_list
+	MITOCHONDRIA_H2O2 = mito_h2o2
+	MITOCHONDRIA_ATP = mito_atp
+	s_num = sub_repetitions
+	additions = additions_list
+	groups = group_descriptions
+	time_segments = times
 
 # FUNCTION: Retrieves input from the user
 # RETURNS: A boolean where True indicates use of the standard curve
@@ -180,21 +208,22 @@ def std_curve(fluor, Y_INT, SLOPE):
 
 	# Iterrates through every row in the dataframe
 	for index, row in fluor.iterrows():
-		
 		column = 1 # Counter that tracks the indices of columns containing y-values
 
 		# Iterrates through every column containing y-values in the row
 		while column < len(fluor.columns):
-
+			
 			# Retrieves the y value from df[column][row]
 			y = row[column]
-
+			# print('ffff')
 			# Converts the fluorescence value to membrane potential 
+			# print((y - Y_INT)/SLOPE)
+			# print(fluor.at[index, column])
 			fluor.at[index, column] = (y - Y_INT)/SLOPE
+			# print('gggg')
 
 			# Increments the column counter
 			column += 2
-
 	return fluor
 
 # FUNCTION: Calculates the slope for all the data points within a time period
@@ -349,188 +378,188 @@ def corrected(df, MITOCHONDRIA):
 # ------------------------MAIN------------------------
 # FUNCTION: Executes the data analysis process
 # RETURNS: Nothing
-def main():
-	mac = True
-	if platform == "win32":
-		mac = False
+# def main():
+# 	mac = True
+# 	if platform == "win32":
+# 		mac = False
 
-	bool_stdcurve = get_input()
-	print('-----------------------------------------------')
-	print("Loading...")
+# 	bool_stdcurve = get_input()
+# 	print('-----------------------------------------------')
+# 	print("Loading...")
 
-	# Retrieves all .txt files in the current working directory
-	root = os.getcwd()
-	path = root + '/*.txt'
-	files = glob.glob(path)   
+# 	# Retrieves all .txt files in the current working directory
+# 	root = os.getcwd()
+# 	path = root + '/*.txt'
+# 	files = glob.glob(path)   
 
-	file_num = 1
+# 	file_num = 1
 
-	if (os.path.isdir(root + '/output') == False):
-			os.makedirs('output')
+# 	if (os.path.isdir(root + '/output') == False):
+# 			os.makedirs('output')
 
-	# Loops through every .txt file found
-	for name in files:
-		print('Analyzing file ' + str(file_num) + '...')
-		print(substrates)
+# 	# Loops through every .txt file found
+# 	for name in files:
+# 		print('Analyzing file ' + str(file_num) + '...')
+# 		print(substrates)
 
-		if mac:
-			# Stores file name
-			filename = name.split('/')[-1]
-		else:
-			filename = name.split('\\')[-1]
+# 		if mac:
+# 			# Stores file name
+# 			filename = name.split('/')[-1]
+# 		else:
+# 			filename = name.split('\\')[-1]
 
-		# Removes file type from filename
-		shortened_filename = filename.split('.')[0]
+# 		# Removes file type from filename
+# 		shortened_filename = filename.split('.')[0]
 
-		if mac:
-			output_dir = root +'/output/' + shortened_filename
-		else:
-			output_dir = root +'\output\\' + shortened_filename
+# 		if mac:
+# 			output_dir = root +'/output/' + shortened_filename
+# 		else:
+# 			output_dir = root +'\output\\' + shortened_filename
 
-		if (os.path.isdir(output_dir) == False):
-			if mac:
-				os.chdir(root + '/output')
-			else:
-				os.chdir(root + '\output')
-			os.makedirs(shortened_filename)
-			os.chdir(root)
+# 		if (os.path.isdir(output_dir) == False):
+# 			if mac:
+# 				os.chdir(root + '/output')
+# 			else:
+# 				os.chdir(root + '\output')
+# 			os.makedirs(shortened_filename)
+# 			os.chdir(root)
 
-		# Creates .xlsx file to output analyzed data to
-		writer = pd.ExcelWriter(shortened_filename + '.xlsx')
+# 		# Creates .xlsx file to output analyzed data to
+# 		writer = pd.ExcelWriter(shortened_filename + '.xlsx')
 
-		# ----DATA READ-IN----
+# 		# ----DATA READ-IN----
 
-		#print(filename) #debug
+# 		#print(filename) #debug
 
-		# Reads in the data from the csv and stores it as a dataframe
-		fluor_raw = pd.read_csv(filename, sep='\t', skiprows=6, skipfooter=1, header=None, engine='python')
+# 		# Reads in the data from the csv and stores it as a dataframe
+# 		fluor_raw = pd.read_csv(filename, sep='\t', skiprows=6, skipfooter=1, header=None, engine='python')
 
-		atp = pd.DataFrame()
+# 		atp = pd.DataFrame()
 
-		for column in fluor_raw[fluor_raw.columns[:2]]:
-			atp[column] = fluor_raw[column]
+# 		for column in fluor_raw[fluor_raw.columns[:2]]:
+# 			atp[column] = fluor_raw[column]
 		
-		fluor_raw = fluor_raw.drop(fluor_raw.columns[[0, 1]], axis=1) ###FIX STUFF
+# 		fluor_raw = fluor_raw.drop(fluor_raw.columns[[0, 1]], axis=1) ###FIX STUFF
 
-		os.chdir(output_dir)
-		new_cols = []
-		for col in fluor_raw.columns:
-			new_cols.append(int(col)-2)
+# 		os.chdir(output_dir)
+# 		new_cols = []
+# 		for col in fluor_raw.columns:
+# 			new_cols.append(int(col)-2)
 
-		fluor_raw.columns = new_cols
-		# Plot raw data
-		plot1(fluor_raw, 'H2O2 Raw Data', 'H2O2 Raw.png')
-		plot1(atp, 'ATP Raw Data', 'ATP Raw.png')
+# 		fluor_raw.columns = new_cols
+# 		# Plot raw data
+# 		plot1(fluor_raw, 'H2O2 Raw Data', 'H2O2 Raw.png')
+# 		plot1(atp, 'ATP Raw Data', 'ATP Raw.png')
 
-		# Produces metadata
-		metadata = prod_metadata(bool_stdcurve)
+# 		# Produces metadata
+# 		metadata = prod_metadata(bool_stdcurve)
 
-		# Exports metadata to .xlsx file
-		metadata.to_excel(writer, ('Metadata'))
+# 		# Exports metadata to .xlsx file
+# 		metadata.to_excel(writer, ('Metadata'))
 
-		# Gets column labels
-		column_labels = []
-		for i in range(0,len(fluor_raw.columns)):
-			if(i % 2 == 0):
-				column_labels.append('X')
-			else:
-				column_labels.append('Y')
+# 		# Gets column labels
+# 		column_labels = []
+# 		for i in range(0,len(fluor_raw.columns)):
+# 			if(i % 2 == 0):
+# 				column_labels.append('X')
+# 			else:
+# 				column_labels.append('Y')
 
-		# ----EXPORT - RAW DATA----
+# 		# ----EXPORT - RAW DATA----
 
-		fluor = fluor_raw.copy()
-		fluor_raw.columns = column_labels
-		fluor_raw.to_excel(writer, ('H2O2 Raw Data'))
+# 		fluor = fluor_raw.copy()
+# 		fluor_raw.columns = column_labels
+# 		fluor_raw.to_excel(writer, ('H2O2 Raw Data'))
 
-		column_labels_atp = []
-		for i in range(0,len(atp.columns)):
-			if(i % 2 == 0):
-				column_labels_atp.append('X')
-			else:
-				column_labels_atp.append('Y')
+# 		column_labels_atp = []
+# 		for i in range(0,len(atp.columns)):
+# 			if(i % 2 == 0):
+# 				column_labels_atp.append('X')
+# 			else:
+# 				column_labels_atp.append('Y')
 
-		atp_xy = atp.copy()
-		atp.columns = column_labels_atp
-		atp.to_excel(writer, ('ATP Raw Data'))
+# 		atp_xy = atp.copy()
+# 		atp.columns = column_labels_atp
+# 		atp.to_excel(writer, ('ATP Raw Data'))
 
-		# ----SLOPES CALCULATION - RAW DATA----
+# 		# ----SLOPES CALCULATION - RAW DATA----
 
-		slope_df = calc_slopes(fluor, substrates[1:])
-		slope_atp = calc_slopes(atp_xy, [substrates[0]])
+# 		slope_df = calc_slopes(fluor, substrates[1:])
+# 		slope_atp = calc_slopes(atp_xy, [substrates[0]])
 
-		# ----EXPORT - SLOPES DATA----
+# 		# ----EXPORT - SLOPES DATA----
 
-		# Plots slopes data
-		plot2(slope_df, 'H2O2 Slopes Data', 'H2O2 Slopes.png')
-		plot2(slope_atp, 'ATP Slopes Data', 'ATP Slopes.png')
+# 		# Plots slopes data
+# 		plot2(slope_df, 'H2O2 Slopes Data', 'H2O2 Slopes.png')
+# 		plot2(slope_atp, 'ATP Slopes Data', 'ATP Slopes.png')
 
-		slope_df.to_excel(writer, ('H2O2 Slopes Data'))
-		slope_atp.to_excel(writer, ('ATP Slopes Data'))
+# 		slope_df.to_excel(writer, ('H2O2 Slopes Data'))
+# 		slope_atp.to_excel(writer, ('ATP Slopes Data'))
 
-		# ----CORRECTION - SLOPES DATA----
+# 		# ----CORRECTION - SLOPES DATA----
 
-		slope_df = corrected(slope_df, MITOCHONDRIA_H2O2)
-		slope_atp = corrected(slope_atp, MITOCHONDRIA_ATP)
+# 		slope_df = corrected(slope_df, MITOCHONDRIA_H2O2)
+# 		slope_atp = corrected(slope_atp, MITOCHONDRIA_ATP)
 
-		# ----EXPORT - CORRECTED SLOPES DATA----
+# 		# ----EXPORT - CORRECTED SLOPES DATA----
 
-		# Plots corrected slopes data
-		plot2(slope_df, 'Corrected H2O2 Slopes Data', 'Corrected H2O2 Slopes.png')
-		plot2(slope_atp, 'Corrected ATP Slopes Data', 'Corrected ATP Slopes.png')
+# 		# Plots corrected slopes data
+# 		plot2(slope_df, 'Corrected H2O2 Slopes Data', 'Corrected H2O2 Slopes.png')
+# 		plot2(slope_atp, 'Corrected ATP Slopes Data', 'Corrected ATP Slopes.png')
 
-		slope_df.to_excel(writer, ('Corrected H2O2 Slopes'))
-		slope_atp.to_excel(writer, ('Corrected ATP Slopes'))
+# 		slope_df.to_excel(writer, ('Corrected H2O2 Slopes'))
+# 		slope_atp.to_excel(writer, ('Corrected ATP Slopes'))
 
-		# ----MEMBRANE POTENTIAL STANDARD CURVE----
-		if(bool_stdcurve):
-			fluor = std_curve(fluor, Y_INT_H2O2, SLOPE_H2O2)
-			atp_xy = std_curve(atp_xy, Y_INT_ATP, SLOPE_ATP)
+# 		# ----MEMBRANE POTENTIAL STANDARD CURVE----
+# 		if(bool_stdcurve):
+# 			fluor = std_curve(fluor, Y_INT_H2O2, SLOPE_H2O2)
+# 			atp_xy = std_curve(atp_xy, Y_INT_ATP, SLOPE_ATP)
 
-			# Plots standard curve data
-			plot1(fluor, 'H2O2 Std Curve Data', 'H2O2 Std Curve.png')
-			plot1(atp_xy, 'ATP Std Curve', 'ATP Std Curve.png')
+# 			# Plots standard curve data
+# 			plot1(fluor, 'H2O2 Std Curve Data', 'H2O2 Std Curve.png')
+# 			plot1(atp_xy, 'ATP Std Curve', 'ATP Std Curve.png')
 
-		# ----AVERAGES - STANDARD CURVE----
+# 		# ----AVERAGES - STANDARD CURVE----
 
-			slopes_stdcurve = calc_slopes(fluor, substrates[1:])
-			slopes_stdcurve_atp = calc_slopes(atp_xy, [substrates[0]])
+# 			slopes_stdcurve = calc_slopes(fluor, substrates[1:])
+# 			slopes_stdcurve_atp = calc_slopes(atp_xy, [substrates[0]])
 
-			# Plots averaged standard curve data
-			plot2(slopes_stdcurve, 'H2O2 Std Curve Slopes Data', 'H2O2 Std Curve Slopes.png')
-			plot2(slopes_stdcurve_atp, 'ATP Std Curve Slopes Data', 'ATP Std Curve Slopes.png')
+# 			# Plots averaged standard curve data
+# 			plot2(slopes_stdcurve, 'H2O2 Std Curve Slopes Data', 'H2O2 Std Curve Slopes.png')
+# 			plot2(slopes_stdcurve_atp, 'ATP Std Curve Slopes Data', 'ATP Std Curve Slopes.png')
 
-			correct_slopes_stdcurve = slopes_stdcurve.copy()
-			correct_slopes_stdcurve_atp = slopes_stdcurve_atp.copy()
+# 			correct_slopes_stdcurve = slopes_stdcurve.copy()
+# 			correct_slopes_stdcurve_atp = slopes_stdcurve_atp.copy()
 
-			correct_slopes_stdcurve = corrected(correct_slopes_stdcurve, MITOCHONDRIA_H2O2)
-			correct_slopes_stdcurve_atp = corrected(correct_slopes_stdcurve_atp, MITOCHONDRIA_ATP)
+# 			correct_slopes_stdcurve = corrected(correct_slopes_stdcurve, MITOCHONDRIA_H2O2)
+# 			correct_slopes_stdcurve_atp = corrected(correct_slopes_stdcurve_atp, MITOCHONDRIA_ATP)
 
-			# Plots averaged standard curve data
-			plot2(correct_slopes_stdcurve, 'H2O2 Corrected Std Curve Slopes Data', 'H2O2 Corrected Std Curve Slopes.png')
-			plot2(correct_slopes_stdcurve_atp, 'ATP Corrected Std Curve Slopes Data', 'ATP Corrected Std Curve Slopes.png')
+# 			# Plots averaged standard curve data
+# 			plot2(correct_slopes_stdcurve, 'H2O2 Corrected Std Curve Slopes Data', 'H2O2 Corrected Std Curve Slopes.png')
+# 			plot2(correct_slopes_stdcurve_atp, 'ATP Corrected Std Curve Slopes Data', 'ATP Corrected Std Curve Slopes.png')
 
-		# ----EXPORT---
+# 		# ----EXPORT---
 
-		# Set column labels
-		fluor.columns = column_labels
-		atp_xy.columns = column_labels_atp
+# 		# Set column labels
+# 		fluor.columns = column_labels
+# 		atp_xy.columns = column_labels_atp
 
-		if(bool_stdcurve):
-			fluor.to_excel(writer,('H2O2 Std Curve'))
-			slopes_stdcurve.to_excel(writer,('H2O2 Std Curve Slopes'))
-			correct_slopes_stdcurve.to_excel(writer,('H2O2 Corrected Std Curve Slopes'))
+# 		if(bool_stdcurve):
+# 			fluor.to_excel(writer,('H2O2 Std Curve'))
+# 			slopes_stdcurve.to_excel(writer,('H2O2 Std Curve Slopes'))
+# 			correct_slopes_stdcurve.to_excel(writer,('H2O2 Corrected Std Curve Slopes'))
 
-			atp_xy.to_excel(writer, ('ATP Std Curve'))
-			slopes_stdcurve_atp.to_excel(writer,('ATP Std Curve Slopes'))
-			correct_slopes_stdcurve_atp.to_excel(writer,('ATP Corrected Std Curve Slopes'))
+# 			atp_xy.to_excel(writer, ('ATP Std Curve'))
+# 			slopes_stdcurve_atp.to_excel(writer,('ATP Std Curve Slopes'))
+# 			correct_slopes_stdcurve_atp.to_excel(writer,('ATP Corrected Std Curve Slopes'))
 
-		# Saves excel file and moves on to next file to be analyzed if there is one
-		writer.save()
-		file_num += 1
-		os.chdir(root)
+# 		# Saves excel file and moves on to next file to be analyzed if there is one
+# 		writer.save()
+# 		file_num += 1
+# 		os.chdir(root)
 
-	print('Analysis complete')
-	print('-----------------------------------------------')
+# 	print('Analysis complete')
+# 	print('-----------------------------------------------')
 
 # Executes main()
 #main()

@@ -15,14 +15,14 @@ import glob
 import os
 from sys import platform
 
-import matplotlib
-import matplotlib.pyplot as plt
+# import matplotlib
+# import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import scipy.stats as stats
 import seaborn as sns
 
-plt.style.use('seaborn-darkgrid')
+# plt.style.use('seaborn-darkgrid')
 
 # Global constants (CHANGE IF NEEDED)
 TIME_PERIOD = 180 # length of trial in seconds

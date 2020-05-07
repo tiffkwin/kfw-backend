@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KFW Analysis</title>
+  <link href="../static/css/delphi.css" rel="stylesheet" type="text/css">
+  <link href="../static/css/bulma.css" rel="stylesheet" type="text/css">
+  <link href="../static/css/bulma.min.css" rel="stylesheet" type="text/css">
+  <script src="http://use.edgefonts.net/source-sans-pro:n2:default.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <header> <a href="/">
+        <h4 class="logo">KFW</h4>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="/">HOME</a></li>
+          <li><a href="/file_upload">UPLOAD</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- <section class="hero" id="hero">
+      <h2 class="hero_header"> <span class="light">KFW ANALYSIS</span></h2>
+      <p class="tagline">Mitochondria, all the time</p>
+    </section> -->
+
+    <section class="footer_banner" id="contact" style="text-align: center; background-color: white;">
+      <p class="is-size-4 has-text-dark" style="margin-top:1em;margin-bottom:1em;"><b>SELECT ASSAY</b></p>
+      <button class="button is-small" style="margin-left:0.5em;margin-right:0.5em;" onclick="loadMP()">MEMBRANE POTENTIAL</button>
+      <button class="button is-small" style="margin-left:0.5em;margin-right:0.5em;" onclick="loadNADH()">NADH</button>
+      <button class="button is-small" style="margin-left:0.5em;margin-right:0.5em;" onclick="loadH2O2()">H2O2</button>
+
+    </section>
+
+  </div>
+
+  <script>
+    function loadMP() {
+      window.open("/membrane_potential","_self")
+    }
+
+    function loadNADH() {
+      window.open("/nadh","_self")
+    }
+
+    function loadH2O2() {
+      window.open("/h2o2","_self")
+    }
+    </script>
+
+</body>
+
+</html>

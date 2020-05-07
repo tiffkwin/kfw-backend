@@ -16,6 +16,8 @@ def analyzeH2O2(slope_atp, y_int_atp, slope_h2o2, y_int_h2o2, substrates_list, m
 
     bool_stdcurve = True # only for testing
 
+    file_path = TextFile.query.filter_by(experiment_id=experiment_id).first().file_path
+
     try:
         mac = True
         if platform == "win32":
@@ -30,10 +32,12 @@ def analyzeH2O2(slope_atp, y_int_atp, slope_h2o2, y_int_h2o2, substrates_list, m
         root = os.getcwd()
         print(root)
 
-        if mac:
-            path = root + '/project/uploads/*.txt'
-        else:
-            path = root + '\project\\uploads\\*.txt'
+        path = file_path
+
+        # if mac:
+        #     path = root + '/project/uploads/*.txt'
+        # else:
+        #     path = root + '\project\\uploads\\*.txt'
     
         print(path)
 

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>KFW Analysis</title>
+    <link href="../static/css/delphi.css" rel="stylesheet" type="text/css">
+    <link href="../static/css/bulma.css" rel="stylesheet" type="text/css">
+    <link href="../static/css/bulma.min.css" rel="stylesheet" type="text/css">
+    <script src="http://use.edgefonts.net/source-sans-pro:n2:default.js" type="text/javascript"></script>
+  </head>
+  
+  <body>
+  
+    <div class="container">
+  
+      <header> <a href="/">
+          <h4 class="logo">KFW</h4>
+        </a>
+        <nav>
+          <ul>
+            <li><a href="/">HOME</a></li>
+            <li><a href="/file_upload">UPLOAD</a></li>
+          </ul>
+        </nav>
+      </header>
+  
+      <section class="footer_banner" id="contact" style="text-align: left; background-color: white;border-top-color:lightgray;border-top-width: 1px;border-top-style:solid;">
+        <h2 class="hidden">Footer Banner Section </h2>
+        <div class="columns">
+          <div class="column">
+          </div>
+          <div class="column" style="border-width:2px;border-style:solid;border-color:#f5f5f5">
+            <h1 class="is-size-5"><b>H2O2 ANALYSIS</b></h1><br>
+            <p>Standard Curve</p>
+            <div style="border-width:2px;border-style:solid;border-color:#f5f5f5;padding:1em;">
+            <label class="checkbox">
+              <input id="std-curve" type="checkbox" style="margin:1em">
+              Use standard curve
+            </label>
+          </div>
+          <br>
+            <p>ATP Slope</p>
+            <input class="input" type="number" id="atp_slope" name="atp_slope" placeholder="ATP Slope" disabled><br><br>
+            <p>ATP Y-Intercept</p>
+            <input class="input" type="number" id="atp_y_int" name="atp_y_int" placeholder="Y-Intercept" disabled><br><br>
+            <p>H2O2 Slope</p>
+            <input class="input" type="number" id="h2o2_slope" name="h2o2_slope" placeholder="H2O2 Slope" disabled><br><br>
+            <p>H2O2 Y-Intercept</p>
+            <input class="input" type="number" id="h2o2_y_int" name="h2o2_y_int" placeholder="H2O2 Y-Intercept" disabled><br><br>
+            <p>ATP Milligrams of Mitochondria</p>
+            <input class="input" type="number" id="atp_mito" name="atp_mito" placeholder="ATP Milligrams of Mitochondria" ><br><br>
+            <p>H2O2 Milligrams of Mitochondria</p>
+            <input class="input" type="number" id="h2o2_mito" name="h2o2_mito" placeholder="H2O2 Milligrams of Mitochondria" ><br><br>
+            <p>Experiment ID</p>
+            <input class="input" type="text" id="experiment_id" name="experiment_id" placeholder="Experiment ID"><br><br>
+            <p>Substrates</p>
+            <div id="tags-field" class="field is-grouped is-grouped-multiline" style="border-width:2px;border-style:dashed;border-color:lightgray;padding:1em;margin-bottom:0.5em">
+            </div>
+            <div class="select">
+              <select id="substrates">
+                <option>Pyr/M</option>
+                <option>G/M</option>
+                <option>Pc/M</option>
+                <option>S/R</option>
+                <option>AKG</option>
+                <option>P/G/M/S/O</option>
+                <option>Oct/M</option>
+                <option>Ac/M</option>
+                <option>KIC/M</option>
+                <option>KIC</option>
+                <option>KIV/M</option>
+                <option>KIV/Oct</option>
+                <option>KMV/M</option>
+                <option>KMV/Oct</option>
+                <option>Pyr/C</option>
+                <option>Oct/C</option>
+                <option>Pc/C</option>
+                <option>Ac/C</option>
+                <option>Glut</option>
+              </select>
+            </div>
+            <button class="button is-dark" onclick="addSub()">Add</button>
+            <br><br>
+            <p>Additions</p>
+            <div id="adtn-tags-field" class="field is-grouped is-grouped-multiline" style="border-width:2px;border-style:dashed;border-color:lightgray;padding:1em;margin-bottom:0.5em">
+            </div>
+            <div class="select">
+              <select id="additions">
+                <option>Buffer</option>
+                <option>Mito</option>
+                <option>Substrate</option>
+                <option>PCR</option>
+                <option>Drug</option>
+                <option>Vehicle</option>
+                <option>FCCP</option>
+                <option>Oligo</option>
+                <option>Rot</option>
+                <option>Ant A</option>
+                <option>AF</option>
+                <option>BCNU</option>
+                <option>CN</option>
+                <option>Ala</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <button class="button is-dark" onclick="addAdtn()">Add</button>
+            <br><br><br>
+            <button class="button is-link" onclick="loadDoc()">Analyze Data</button>
+
+          </div>
+          <div class="column">
+          </div>
+        </div>
+      </section>
+
+    </div>
+  
+ 
+<script>
+
+var substrates_array = []
+var adtn_array = []
+
+function addSub(){
+  var tags = document.getElementById('tags-field');
+  var selection = document.getElementById('substrates').value;
+  var tagSpan = document.createElement('span');
+  tagSpan.className = "tag is-light";
+  tagSpan.innerText=selection;
+  tagSpan.style.margin = "0.5em";
+  var deleteButton = document.createElement('button');
+  deleteButton.className = "delete is-small";
+  deleteButton.onclick = function(){
+    substrates_array = substrates_array.filter(function(e) { return e !== selection })
+    deleteButton.parentNode.parentNode.removeChild(deleteButton.parentNode);
+    console.log(substrates_array);
+  };
+  tagSpan.appendChild(deleteButton);
+  tags.appendChild(tagSpan);
+  substrates_array.push(selection);
+  console.log(substrates_array);
+}
+
+function addAdtn(){
+  var tags = document.getElementById('adtn-tags-field');
+  var selection = document.getElementById('additions').value;
+  var tagSpan = document.createElement('span');
+  tagSpan.className = "tag is-light";
+  tagSpan.innerText=selection;
+  tagSpan.style.margin = "0.5em";
+  var deleteButton = document.createElement('button');
+  deleteButton.className = "delete is-small";
+  deleteButton.onclick = function(){
+    adtn_array = adtn_array.filter(function(e) { return e !== selection })
+    deleteButton.parentNode.parentNode.removeChild(deleteButton.parentNode);
+    console.log(adtn_array);
+  };
+  tagSpan.appendChild(deleteButton);
+  tags.appendChild(tagSpan);
+  adtn_array.push(selection);
+  console.log(adtn_array);
+}
+
+document.getElementById('std-curve').onchange = function() {
+  document.getElementById('atp_slope').disabled = !this.checked;
+  document.getElementById('atp_y_int').disabled = !this.checked;
+  document.getElementById('h2o2_slope').disabled = !this.checked;
+  document.getElementById('h2o2_y_int').disabled = !this.checked;
+};
+
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        window.open("/output/" + document.getElementById("experiment_id").value,"_self")
+    }
+  };
+  xhttp.open("POST", "/analyzeMP", true);
+  xhttp.setRequestHeader("Content-type", "application/json");
+  var data = {
+    std_curve: document.getElementById('std-curve').checked,
+    slope_atp: parseFloat(document.getElementById("atp_slope").value),
+	y_int_atp: parseFloat(document.getElementById("atp_y_int").value),
+	slope_h2o2: parseFloat(document.getElementById("h2o2_slope").value),
+	y_int_h2o2: parseFloat(document.getElementById("h2o2_y_int").value),
+	mito_atp: parseFloat(document.getElementById("atp_mito").value),
+	mito_h2o2: parseFloat(document.getElementById("h2o2_mito").value),
+	substrates_list: substrates_array,
+	experiment_id: document.getElementById("experiment_id").value,
+	sub_repetitions: [],
+	additions_list: adtn_array,
+	group_descriptions: ["group 1"],
+	times: []
+  }
+  xhttp.send(JSON.stringify(data));
+}
+</script>
+
+</body>
+</html>

@@ -6,3 +6,4 @@ class TextFile(db.Model):
     file_id = db.Column(db.Integer, primary_key=True, nullable=False)
     user_id = db.Column(db.Integer, unique=False, nullable=False)
     file_path = db.Column(db.String(300), unique=False, nullable=False)
+    experiment_id = db.Column(db.String(1000), unique=True, nullable=False)

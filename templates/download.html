@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KFW Analysis</title>
+  <link href="../static/css/delphi.css" rel="stylesheet" type="text/css">
+  <link href="../static/css/bulma.css" rel="stylesheet" type="text/css">
+  <link href="../static/css/bulma.min.css" rel="stylesheet" type="text/css">
+  <script src="http://use.edgefonts.net/source-sans-pro:n2:default.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <header> <a href="/">
+        <h4 class="logo">KFW</h4>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="/">HOME</a></li>
+          <li><a href="/file_upload">UPLOAD</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section class="hero" id="hero"">
+        <div class="columns">
+            <div class="column">
+            </div>
+            <div class="column" style="text-align: center;">
+                <h2 class="hero_header"> <span class="light">Analysis Successful</span></h2>
+      <p class="tagline">Download Your Results</p><br>
+      <a href="/output/{{experiment_id}}"download>
+        <button class="button is-link">Download</button>
+      </a>
+      
+            </div>
+            <div class="column">
+            </div>
+      
+    </section>
+
+    <section class="footer_banner">
+    </section>
+  </div>
+
+  <script>
+    function loadUpload() {
+      window.open("/","_self")
+    }
+    </script>
+
+</body>
+
+</html>

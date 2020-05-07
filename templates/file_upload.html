@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>KFW Analysis</title>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<!-- this css file is from online source, author is Matias Meno -->
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css">
+    <link href="../static/css/delphi.css" rel="stylesheet" type="text/css">
+    <link href="../static/css/bulma.css" rel="stylesheet" type="text/css">
+    <link href="../static/css/bulma.min.css" rel="stylesheet" type="text/css">
+	<!-- this is the library we used for this example -->
+	<script src="../static/js/dropzone.js"></script>
+</head>
+
+
+<body>
+
+    <div class="container">
+  
+        <header> <a href="/">
+            <h4 class="logo">KFW</h4>
+          </a>
+          <nav>
+            <ul>
+              <li><a href="/">HOME</a></li>
+              <li><a href="/file_upload">UPLOAD</a></li>
+            </ul>
+          </nav>
+        </header>
+    
+        <section class="footer_banner" id="contact" style="text-align: left; background-color: white;border-top-color:lightgray;border-top-width: 1px;border-top-style:solid;">
+          <h2 class="hidden">Footer Banner Section </h2>
+          <div class="columns">
+            <div class="column">
+            </div>
+            <div class="column" style="border-width:2px;border-style:solid;border-color:#f5f5f5">
+              <h1 class="is-size-5"><b>UPLOAD FILE</b></h1><br>
+              <form method="post" enctype=multipart/form-data action="/upload">
+                <p>Experiment ID</p>
+              <input class="input" type="text" id="experiment_id" name="experiment_id" placeholder="Experiment ID"><br><br>
+                <input id="file_input" type=file name=file accept=".txt" disabled>
+                <input id="submit_input" type=submit value=Upload style="margin-top: 0.5em;" disabled>
+              </form>
+
+              <!-- <form id="my_dropzone" action="/upload" method="post" class="dropzone">
+                <div class="dz-default dz-message">
+                    <span>Drop a txt file here or click to upload</span>
+                </div>
+            </form> -->
+  
+            </div>
+            <div class="column">
+            </div>
+          </div>
+        </section>
+  
+      </div>
+<script>
+    document.getElementById('experiment_id').oninput = function() {
+        document.getElementById('file_input').disabled = this.value.length==0;
+        document.getElementById('submit_input').disabled = this.value.length==0;
+    };
+</script>
+
+</body>
+
+</html>

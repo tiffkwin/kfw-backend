@@ -10,11 +10,13 @@ import pandas as pd
 # UPLOAD_FOLDER = './project/uploads'
 # app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-def analyzeMP(slope, y_int, substrates_list, experiment_id, sub_repetitions, additions_list, group_descriptions, times):
+def analyzeMP(use_std_curve, slope, y_int, substrates_list, experiment_id, sub_repetitions, additions_list, group_descriptions, times):
 
     setVariables(slope, y_int, substrates_list, experiment_id, sub_repetitions, additions_list, group_descriptions, times)
 
-    bool_stdcurve = True # only for testing
+    bool_stdcurve = use_std_curve # only for testing
+
+    file_path = TextFile.query.filter_by(experiment_id=experiment_id).first().file_path
 
     try:
         mac = True
@@ -30,10 +32,12 @@ def analyzeMP(slope, y_int, substrates_list, experiment_id, sub_repetitions, add
         root = os.getcwd()
         print(root)
 
-        if mac:
-            path = root + '/project/uploads/*.txt'
-        else:
-            path = root + '\project\\uploads\\*.txt'
+        path = file_path
+
+        # if mac:
+        #     # path = root + '/project/uploads/*.txt'
+        # # else:
+        # #     path = root + '\project\\uploads\\*.txt'
     
         print(path)
 
@@ -63,23 +67,22 @@ def analyzeMP(slope, y_int, substrates_list, experiment_id, sub_repetitions, add
             # Removes file type from filename
             shortened_filename = filename.split('.')[0]
             if mac:
-                output_dir = root +'/output/' + shortened_filename
+                output_dir = root +'/output'
             else:
-                output_dir = root +'\output\\' + shortened_filename
+                output_dir = root +'\output'
 
             if (os.path.isdir(output_dir) == False):
                 if mac:
                     os.chdir(root + '/output')
                 else:
                     os.chdir(root + '\output')
-                os.makedirs(shortened_filename)
             if mac:
                 os.chdir(root + '/project/uploads')
             else:
                 os.chdir(root + '\project\\uploads')
 
             # Creates .xlsx file to output analyzed data to
-            writer = pd.ExcelWriter(shortened_filename + '.xlsx')
+            writer = pd.ExcelWriter(experiment_id + '.xlsx')
 
             # ----DATA READ-IN----
 

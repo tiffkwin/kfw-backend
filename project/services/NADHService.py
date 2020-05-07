@@ -14,6 +14,7 @@ def analyzeNADHRedox(substrates_list, experiment_id, sub_repetitions, additions_
 
     setVariables(substrates_list, experiment_id, sub_repetitions, additions_list, group_descriptions, times)
 
+    file_path = TextFile.query.filter_by(experiment_id=experiment_id).first().file_path
     try:
         mac = True
         if platform == "win32":
@@ -28,10 +29,12 @@ def analyzeNADHRedox(substrates_list, experiment_id, sub_repetitions, additions_
         root = os.getcwd()
         print(root)
 
-        if mac:
-            path = root + '/project/uploads/*.txt'
-        else:
-            path = root + '\project\\uploads\\*.txt'
+        path = file_path
+
+        # if mac:
+        #     path = root + '/project/uploads/*.txt'
+        # else:
+        #     path = root + '\project\\uploads\\*.txt'
     
         print(path)
 

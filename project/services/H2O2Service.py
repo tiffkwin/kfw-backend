@@ -67,9 +67,9 @@ def analyzeH2O2(slope_atp, y_int_atp, slope_h2o2, y_int_h2o2, substrates_list, m
             # Removes file type from filename
             shortened_filename = filename.split('.')[0]
             if mac:
-                output_dir = root +'/output/' + shortened_filename
+                output_dir = root +'/output'
             else:
-                output_dir = root +'\output\\' + shortened_filename
+                output_dir = root +'\output'
 
             if (os.path.isdir(output_dir) == False):
                 if mac:
@@ -83,7 +83,7 @@ def analyzeH2O2(slope_atp, y_int_atp, slope_h2o2, y_int_h2o2, substrates_list, m
                 os.chdir(root + '\project\\uploads')
 
             # Creates .xlsx file to output analyzed data to
-            writer = pd.ExcelWriter(shortened_filename + '.xlsx')
+            writer = pd.ExcelWriter(experiment_id + '.xlsx')
 
             # ----DATA READ-IN----
 

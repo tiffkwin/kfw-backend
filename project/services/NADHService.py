@@ -64,9 +64,9 @@ def analyzeNADHRedox(substrates_list, experiment_id, sub_repetitions, additions_
             # Removes file type from filename
             shortened_filename = filename.split('.')[0]
             if mac:
-                output_dir = root +'/output/' + shortened_filename
+                output_dir = root +'/output'
             else:
-                output_dir = root +'\output\\' + shortened_filename
+                output_dir = root +'\output' 
 
             if (os.path.isdir(output_dir) == False):
                 if mac:
@@ -80,7 +80,7 @@ def analyzeNADHRedox(substrates_list, experiment_id, sub_repetitions, additions_
                 os.chdir(root + '\project\\uploads')
 
             # Creates .xlsx file to output analyzed data to
-            writer = pd.ExcelWriter(shortened_filename + '.xlsx')
+            writer = pd.ExcelWriter(experiment_id + '.xlsx')
 
             # ----DATA READ-IN----
 

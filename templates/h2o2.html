@@ -179,7 +179,7 @@ function loadDoc() {
         window.open("/output/" + document.getElementById("experiment_id").value,"_self")
     }
   };
-  xhttp.open("POST", "/analyzeMP", true);
+  xhttp.open("POST", "/analyzeH2O2", true);
   xhttp.setRequestHeader("Content-type", "application/json");
   var data = {
     std_curve: document.getElementById('std-curve').checked,

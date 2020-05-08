@@ -151,6 +151,7 @@ function loadDoc() {
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       window.open("/output/" + document.getElementById("experiment_id").value,"_self")
+    }
   };
   xhttp.open("POST", "/analyzeNADH", true);
   xhttp.setRequestHeader("Content-type", "application/json");
